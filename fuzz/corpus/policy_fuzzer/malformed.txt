@@ -1,0 +1,2 @@
+-A INPUT --dport nope -j
+add rule inet filter input tcp dport xx accept

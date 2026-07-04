@@ -1,0 +1,6 @@
+#include "core/status.hpp"
+#include <sstream>
+namespace guardsight::core {
+void Diagnostics::add(Severity s,std::string c,std::string m,std::size_t o){items_.push_back({s,std::move(c),std::move(m),o});} void Diagnostics::info(std::string c,std::string m,std::size_t o){add(Severity::info,std::move(c),std::move(m),o);} void Diagnostics::warn(std::string c,std::string m,std::size_t o){add(Severity::warning,std::move(c),std::move(m),o);} void Diagnostics::error(std::string c,std::string m,std::size_t o){add(Severity::error,std::move(c),std::move(m),o);} bool Diagnostics::has_errors() const{for(const auto& i:items_) if(i.severity==Severity::error) return true; return false;} bool Diagnostics::empty() const{return items_.empty();} std::size_t Diagnostics::size() const{return items_.size();} const std::vector<Diagnostic>& Diagnostics::items() const{return items_;} std::string Diagnostics::summary() const{std::ostringstream o; for(std::size_t i=0;i<items_.size();++i){if(i)o<<'\n'; o<<items_[i];} return o.str();}
+std::string severity_name(Severity s){switch(s){case Severity::info:return "info";case Severity::warning:return "warning";case Severity::error:return "error";} return "unknown";} std::ostream& operator<<(std::ostream& os,const Diagnostic& d){os<<severity_name(d.severity)<<":"<<d.code; if(d.offset) os<<"@"<<d.offset; return os<<": "<<d.message;}
+}

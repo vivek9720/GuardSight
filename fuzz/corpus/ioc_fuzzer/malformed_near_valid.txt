@@ -1,0 +1,2 @@
+value=999.1.1.1,severity=maybe
+https://%zz.example

@@ -1,0 +1,2 @@
+https://example.com/login
+http://bad.example/path?q=1

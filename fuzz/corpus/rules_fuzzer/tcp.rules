@@ -1,0 +1,1 @@
+drop tcp any any -> 192.168.1.10 445 (msg:"smb block"; sid:3; rev:1;)
